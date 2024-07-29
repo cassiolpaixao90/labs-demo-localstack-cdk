@@ -6,7 +6,7 @@ const headers = {
     "Access-Control-Allow-Methods": "*",
 }
 
-export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyResultV2> => {
+export const main = async (event: APIGatewayEvent): Promise<APIGatewayProxyResultV2> => {
     return {
         statusCode: 200,
         body: JSON.stringify(event),

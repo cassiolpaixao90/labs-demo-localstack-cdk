@@ -4,11 +4,11 @@
         {
             "type": "node",
             "request": "attach",
-            "name": "APIGateway",
+            "name": "api:todos",
             "port": 9229,
             "protocol": "inspector",
             "restart": true,
-            "localRoot": "${workspaceFolder}/functions",
+            "localRoot": "${workspaceFolder}/dist/todos",
             "remoteRoot": "/var/task",
             "skipFiles": [
                 "<node_internals>/**"

@@ -6,13 +6,13 @@ const esBuildPluginTsc = require('esbuild-plugin-tsc');
 
 const tsconfig = path.join('./tsconfig.json');
 
-const OUT_DIR = "functions"
+const OUT_DIR = "dist"
 const isLocal = process.env.NODE_ENV === "local";
 
 const main = async () => {
-    const entryFiles = await glob('functions/**/*.ts')
+    const entryFiles = await glob('packages/functions/src/**/*.ts')
     const entryPoints = entryFiles.reduce((acc, file) => {
-        const relativePath = path.relative('functions', file);
+        const relativePath = path.relative('packages/functions/src', file);
         const { dir, name } = path.parse(relativePath);
         const entryKey = path.join(dir, name).replace(/\\/g, '/');
         acc[entryKey] = file;

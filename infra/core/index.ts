@@ -19,7 +19,7 @@ export class DemoLocalstackStack extends cdk.Stack {
             memorySize: 128,
             runtime: Runtime.NODEJS_18_X,
             handler: 'handler',
-            entry: `./functions/index.ts`,
+            entry: `./packages/functions/src/todos/index.ts`,
             timeout: cdk.Duration.seconds(14000),
             bundling: {
                 sourceMap: true
