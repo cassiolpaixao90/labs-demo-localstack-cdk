@@ -6,3 +6,8 @@ node_modules
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+volume
+.aws-sam
+.idea/
+functions/**/index.js
+functions/**/index.js.map

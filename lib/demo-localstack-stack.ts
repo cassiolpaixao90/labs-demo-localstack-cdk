@@ -1,16 +1,32 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import { Runtime } from "aws-cdk-lib/aws-lambda";
+import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
 
 export class DemoLocalstackStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+    constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+        super(scope, id, props);
 
-    // The code that defines your stack goes here
+        const api = new RestApi(this, 'api', {
+            description: 'example api gateway',
+            deployOptions: {
+                stageName: 'dev',
+            },
+        });
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'DemoLocalstackQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
-  }
+        const nodeFunction = new NodejsFunction(this, 'nodeFunction', {
+            memorySize: 128,
+            runtime: Runtime.NODEJS_18_X,
+            handler: 'handler',
+            entry: `./functions/index.ts`,
+            timeout: cdk.Duration.seconds(14000),
+            bundling: {
+                sourceMap: true
+            }
+        });
+
+        const methods = api.root.addResource('hello');
+        methods.addMethod('GET', new LambdaIntegration(nodeFunction));
+    }
 }
